@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "WebsiteSettings";
+}
+@model Dictionary<string,string>
+<div class="row justify-content-between">
+    <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+        <div class="dashboard_wrap d-flex align-items-center justify-content-between">
+            <div class="arion">
+                <nav class="transparent">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-controller="dashboard" asp-action="index">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Website Settings</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="dashboard_wrap">
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 mb-4">
+                    <h6 class="m-0">Website Settings</h6>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-xl-12 col-lg-12 col-md-12">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly"></div>
+                        <div class="form-group smalls">
+                            <label>Banner Name</label>
+                            <textarea asp-for="@Model["BannerName"]" type="text" class="form-control" ></textarea>
+                            <span asp-validation-for="@Model["BannerName"]" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label>Banner Sub Title*</label>
+                            <textarea asp-for="@Model["BannerSubTitle"]" type="text" class="form-control"></textarea>
+                            <span asp-validation-for="@Model["BannerSubTitle"]" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label>Banner Second Title*</label>
+                            <textarea asp-for="@Model["BannerSecondTitle"]" type="text" class="form-control"></textarea>
+                            <span asp-validation-for="@Model["BannerSecondTitle"]" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label>Banner Description*</label>
+                            <textarea asp-for="@Model["BannerDescription"]" type="text" class="form-control"></textarea>
+                            <span asp-validation-for="@Model["BannerDescription"]" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label>Courses Info*</label>
+                            <textarea asp-for="@Model["MainInfo1"]" type="text" class="form-control"></textarea>
+                            <span asp-validation-for="@Model["MainInfo1"]" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label>Access Info*</label>
+                            <textarea asp-for="@Model["MainInfo2"]" type="text" class="form-control"></textarea>
+                            <span asp-validation-for="@Model["MainInfo2"]" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label>Enrolled Info*</label>
+                            <textarea asp-for="@Model["MainInfo3"]" type="text" class="form-control"></textarea>
+                            <span asp-validation-for="@Model["BannerSubTitle"]" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label>How IT Works*</label>
+                            <textarea asp-for="@Model["HowITWorks"]" type="text" class="form-control"></textarea>
+                            <span asp-validation-for="@Model["MainInfo3"]" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label>Find Courses Description*</label>
+                            <textarea asp-for="@Model["MainInfo3"]" type="text" class="form-control"></textarea>
+                            <span asp-validation-for="@Model["MainInfo3"]" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label>Watch Courses Lecture Description*</label>
+                            <textarea asp-for="@Model["Watch Course Lecture"]" type="text" class="form-control"></textarea>
+                            <span asp-validation-for="@Model["Watch Course Lecture"]" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label> Get Certificate Description*</label>
+                            <textarea asp-for="@Model["Get Certificate"]" type="text" class="form-control"></textarea>
+                            <span asp-validation-for="@Model["Get Certificate"]" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <button class="btn theme-bg text-white" type="submit">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</section>

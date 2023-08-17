@@ -1,0 +1,129 @@
+﻿@model InstructorRegisterVM
+<section>
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-xl-7 col-lg-8 col-md-12 col-sm-12">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="crs_log_wrap">
+                        <div class="crs_log__thumb">
+                            <img src="~/user/assets/img/registerlogin.jpg" class="img-fluid" alt="" />
+                        </div>
+                        <div class="crs_log__caption">
+                            <div class="rcs_log_123">
+                                <div class="rcs_ico"><i class="fas fa-user"></i></div>
+                            </div>
+
+                            <div class="rcs_log_124">
+                                <div class="Lpo09"><h4>Login Your Account</h4></div>
+                                <div asp-validation-summary="ModelOnly"></div>
+                                <div class="form-group row mb-0">
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label asp-for="Name">First Name*</label>
+                                            <input asp-for="Name" type="text" class="form-control" placeholder="First Name" />
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label asp-for="Surname">Last Name*</label>
+                                            <input asp-for="Surname" type="text" class="form-control" placeholder="Last Name" />
+                                            <span asp-validation-for="Surname" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="form-group">
+                                        <label asp-for="Description">Description*</label>
+                                        <div style="width:100%">
+                                            <textarea asp-for="Description" class="form-control" placeholder="Description"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+
+                                        </div>
+                                    </div>
+                                <div class="form-group">
+                                    <label asp-for="UserName">User Name</label>
+                                    <input asp-for="UserName" type="text" class="form-control" placeholder="User Name" />
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Email">Email</label>
+                                    <input asp-for="Email" type="text" class="form-control" placeholder="example@gmail.com" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Experience">Experince*</label>
+                                    <input asp-for="Experience" class="form-control" min="1" max="80" placeholder="Enter Experince Year" />
+                                    <span asp-validation-for="Experience" class="text-danger"></span>
+                                </div>
+                                    <div class="form-group">
+                                        <label asp-for="LinkedInUrl">Linkedin Account Url</label>
+                                        <input asp-for="LinkedInUrl" type="url" class="form-control" placeholder="Linkedin" />
+                                        <span asp-validation-for="LinkedInUrl" class="text-danger"></span>
+                                    </div>
+                                <div class="form-group">
+                                    <label asp-for="FacebookUrl">Facebook Account Url</label>
+                                    <input asp-for="FacebookUrl" type="url" class="form-control" placeholder="Facebook" />
+                                    <span asp-validation-for="FacebookUrl" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="InstagramUrl">Instagram Account Url</label>
+                                    <input asp-for="InstagramUrl" type="url" class="form-control" placeholder="Instagram" />
+                                    <span asp-validation-for="InstagramUrl" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="TwitterUrl">Twitter Account Url</label>
+                                    <input asp-for="TwitterUrl" type="url" class="form-control" placeholder="Twitter" />
+                                    <span asp-validation-for="TwitterUrl" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group smalls">
+                                        <label>Profession*</label>
+                                        <div class="simple-input">
+                                            <select asp-for="ProfessionIds" asp-items="@ViewBag.Professions" id="cates" class="form-control" >
+                                            </select>
+                                        </div>
+                                    </div>
+                                <div class="form-group smalls">
+                                    <label asp-for="Image">Add Your Photo</label>
+                                    <div class="custom-file">
+                                        <input asp-for="Image" type="file" class="custom-file-input" id="customFile">
+                                        <label asp-for="Image" class="custom-file-label" for="customFile">Choose file</label>
+                                        <span asp-validation-for="Image" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+                                <div class="form-group smalls">
+                                    <label asp-for="Preview">Add a Video that Describes You</label>
+                                    <div class="custom-file">
+                                        <input asp-for="Preview" type="file" class="custom-file-input" id="customFile">
+                                        <label asp-for="Preview" class="custom-file-label" for="customFile">Choose file</label>
+                                        <span asp-validation-for="Preview" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Password">Password</label>
+                                    <input asp-for="Password" type="password" class="form-control" placeholder="*******" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ConfirmPassword">ConFirmPassword</label>
+                                    <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="*******" />
+                                    <span asp-validation-for="ConfirmPassword" class="text-dark"></span>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn full-width btn-md theme-bg text-white">Sign Up</button>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="crs_log__footer d-flex justify-content-between">
+                            <div class="fhg_45"><p class="musrt">Already have account? <a asp-controller="accountinstructor" asp-action="signin" class="theme-cl">Login</a></p></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>

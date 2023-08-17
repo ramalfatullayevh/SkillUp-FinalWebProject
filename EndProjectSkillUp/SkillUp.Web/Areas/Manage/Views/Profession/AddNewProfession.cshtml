@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewData["Title"] = "AddNewProfession";
+}
+
+@model CreateProfessionVM
+<div class="row justify-content-between">
+    <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+        <div class="dashboard_wrap d-flex align-items-center justify-content-between">
+            <div class="arion">
+                <nav class="transparent">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-area="manage" asp-controller="dashboard" asp-action="index">Go To Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Add New Profession</li>
+                    </ol>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="dashboard_wrap">
+
+            <div class="form_blocs_wrap">
+                <form method="post">
+                    <div class="row justify-content-between">
+
+                        <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12">
+                            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <button class="nav-link active" id="v-pills-basic-tab" data-toggle="pill" data-target="#v-pills-basic" type="button" role="tab" aria-controls="v-pills-basic" aria-selected="true">Basic</button>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-9 col-lg-8 col-md-7 col-sm-12">
+
+                            <div class="tab-content" id="v-pills-tabContent">
+                                <div class="tab-pane fade show active" id="v-pills-basic" role="tabpanel" aria-labelledby="v-pills-basic-tab">
+
+                                    <div class="form-group smalls">
+                                        <label asp-for="Name">Profession Name*</label>
+                                        <input asp-for="Name" type="text" class="form-control" placeholder="Enter Profession Name">
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success me-2">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+
+

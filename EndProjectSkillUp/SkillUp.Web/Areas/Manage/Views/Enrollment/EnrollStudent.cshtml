@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "EnrollStudent";
+}
+@model EnrollStudentVM
+<div class="row justify-content-between">
+    <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+        <div class="dashboard_wrap d-flex align-items-center justify-content-between">
+            <div class="arion">
+                <nav class="transparent">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-area="manage" asp-controller="dashboard" asp-action="index">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Enroll Student</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="dashboard_wrap">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger text-center tex"></div>
+            <div class="row justify-content-center">
+                <div class="col-xl-8 col-lg-10 col-md-12">
+
+                <div class="form-group smalls">
+                            <label asp-for="AppUserId">Choose Student</label>
+                            <select asp-for="AppUserId" asp-items="@ViewBag.AppUsers" id="crss" class="form-control"></select>
+                            <span asp-validation-for="AppUserId" class="text-danger"></span>
+                 </div>
+                 <div class="form-group smalls">
+                        <label asp-for="CourseId">Choose Course</label>
+                        <select asp-for="CourseId" asp-items="@ViewBag.Courses" id="crss" class="form-control"></select>
+                        <span asp-validation-for="AppUserId" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group smalls">
+                        <button  type="submit" class="btn theme-bg text-white">Enroll Student</button>
+                    </div>
+
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+</section>

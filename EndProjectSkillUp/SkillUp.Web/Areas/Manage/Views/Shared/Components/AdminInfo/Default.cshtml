@@ -1,0 +1,190 @@
+﻿@model AdminDashboardVM
+<div id="main-wrapper">
+
+    <div class="header header-light">
+        <div class="container">
+            <nav id="navigation" class="navigation navigation-landscape">
+                <div class="nav-header">
+                    <a class="nav-brand" href="#">
+                        <img src="~/user/assets/img/logo.png" class="logo" alt="" />
+                    </a>
+                    <div class="nav-toggle"></div>
+                    <div class="mobile_nav">
+                    </div>
+                </div>
+                <div class="nav-menus-wrapper" style="transition-property: none;">
+                    <ul class="nav-menu">
+
+                        <li class="active"><a asp-area="Default" asp-controller="home" asp-action="index">Back To Home</a></li>
+
+                    </ul>
+
+                    <ul class="nav-menu nav-menu-social align-to-right">
+
+                        <li class="account-drop">
+                            <a href="javascript:void(0);" class="crs_yuo12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="embos_45"><i class="fas fa-bell"></i><i class="embose_count red">
+                                        @{
+                                            var notifications = 0;
+                                        }
+                                        @foreach (var message in Model.Contacts)
+                                        {
+                                            if (message.IsRead == false)
+                                            {
+                                                notifications ++;
+                                            }
+                                        }
+                                        <span>@notifications</span>
+                                </i></span>
+                            </a>
+                            <div class="dropdown-menu pull-right animated flipInX">
+                                <div class="drp_menu_headr bg-warning">
+                                    <h4> @notifications Notifications</h4>
+                                </div>
+                                <div class="ground-list ground-hover-list">
+                                    @foreach (var message in Model.Contacts.OrderByDescending(m=>m.CreateDate))
+                                    {
+                                        if (message.IsRead==false)
+                                        {
+                                            <div class="ground ground-list-single">
+                                            <div class="rounded-circle p-3 p-sm-4 d-flex align-items-center justify-content-center bg-light-success">
+                                                <div class="position-absolute text-success h5 mb-0"><i class="fas fa-user"></i></div>
+                                            </div>
+
+                                            <div class="ground-content">
+                                                <h6><a href="#">@(message.Name + " " + message.Surname)</a></h6>
+                                                <small class="text-fade">@message.Message</small>
+                                                <span class="small">@message.CreateDate</span>
+                                            </div>
+                                        </div>
+                                            
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="btn-group account-drop">
+                                <a href="javascript:void(0);" class="crs_yuo12 btn btn-order-by-filt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @if (Model.AppUser.ImageUrl==null)
+                                    {
+                                        <img src="~/user/assets/userimg/userimage.png" class="avater-img" alt="">
+                                    }
+                                    else
+                                    {
+                                      <img src="~/user/assets/userimg/@Model.AppUser.ImageUrl" width="100px" class="avater-img" alt="">
+                                    }
+                                </a>
+                                <div class="dropdown-menu pull-right animated flipInX">
+                                    <div class="drp_menu_headr">
+                                        <h4>Hi, @(Model.AppUser.Name + " " + Model.AppUser.Surname)</h4>
+                                    </div>
+                                    <ul>
+                                        <li><a asp-area="manage" asp-controller="dashboard" asp-action="index"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
+                                        <li><a asp-area="manage" asp-controller="myProfile" asp-action="index"><i class="fa fa-user-tie"></i>My Profile</a></li>
+                                        <li><a asp-area="manage" asp-controller="course" asp-action="manageCourses"><i class="fas fa-shopping-basket"></i>Manage Courses</a></li>
+                                        <li><a asp-area="manage" asp-controller="product" asp-action="manageProducts"><i class="fas fa-shopping-basket"></i>Manage Products</a></li>
+                                        <li><a asp-area="manage" asp-controller="instructor" asp-action="manageInstructor"><i class="fas fa-toolbox"></i>Manage Instructor</a></li>
+                                        <li><a asp-area="manage" asp-controller="student" asp-action="manageStudents"><i class="fa fa-envelope"></i>Manage Students</a></li>
+                                        <li><a asp-area="manage" asp-controller="message" asp-action="index"><i class="fas fa-comments"></i>Messages</a></li>
+                                        <li><a  asp-area="default" asp-controller="account" asp-action="signout"><i class="fa fa-unlock-alt"></i>Sign Out</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <section class="gray pt-4">
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-lg-3 col-md-3">
+                    <div class="dashboard-navbar">
+
+                        <div class="d-user-avater">
+                            @if (Model.AppUser.ImageUrl == null)
+                            {
+                                <img src="~/user/assets/userimg/userimage.png" class="avater-img" alt="">
+                            }
+                            else
+                            {
+                                <img src="~/user/assets/userimg/@Model.AppUser.ImageUrl" width="100px" class="avater-img" alt="">
+                            }
+                            <h4>@(Model.AppUser.Name + " " + Model.AppUser.Surname)</h4>
+                            <h6 class="text-danger">@ViewBag.AdminRole</h6>
+                        </div>
+
+                        <div class="d-navigation">
+                            <ul id="side-menu">
+                                <li class="active"><a asp-area="manage" asp-controller="Dashboard" asp-action="Index"><i class="fas fa-th"></i>Dashboard</a></li>
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);"><i class="fas fa-shopping-basket"></i>Courses<span class="ti-angle-left"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li><a asp-area="manage" asp-controller="Course" asp-action="ManageCourses">Manage Courses</a></li>
+                                        <li><a asp-area="manage" asp-controller="Category" asp-action="CourseCategory">Course Category</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);"><i class="fas fa-shopping-basket"></i>Products<span class="ti-angle-left"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li><a asp-area="manage" asp-controller="Product" asp-action="ManageProducts">Manage Products</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);"><i class="fas fa-gem"></i>Enrollment<span class="ti-angle-left"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li><a asp-area="manage" asp-controller="Enrollment" asp-action="EnrollStudent">Enroll a Couse</a></li>
+                                        <li><a asp-area="manage" asp-controller="Enrollment" asp-action="EnrollProduct">Enroll a Product</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);"><i class="fas fa-archive"></i>Report<span class="ti-angle-left"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li><a asp-area="manage" asp-controller="Report" asp-action="AdminCourseRevenue">Admin Courses Revenue</a></li>
+                                        <li><a asp-area="manage" asp-controller="Report" asp-action="AdminProductRevenue">Admin Products Revenue</a></li>
+                                        <li><a asp-area="manage" asp-controller="Report" asp-action="InstructorCourseRevenue">Instructor Courses Revenue</a></li>
+                                        <li><a asp-area="manage" asp-controller="Report" asp-action="InstructorProductRevenue">Instructor Products Revenue</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);"><i class="fas fa-user-shield"></i>Admins<span class="ti-angle-left"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li><a asp-area="manage" asp-controller="Admin" asp-action="ManageAdmin">Manage Admins</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);"><i class="fas fa-toolbox"></i>Instructors<span class="ti-angle-left"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li><a asp-area="manage" asp-controller="Instructor" asp-action="ManageInstructor">Manage Instructors</a></li>
+                                        <li><a asp-area="manage" asp-controller="profession" asp-action="instructorprofession">Instructor Professions</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);"><i class="fas fa-user"></i>Students<span class="ti-angle-left"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li><a asp-area="manage" asp-controller="Student" asp-action="ManageStudents">Manage Students</a></li>
+                                    </ul>
+                                </li>
+                                <li><a asp-area="manage" asp-controller="Message" asp-action="Index"><i class="fas fa-comments"></i>Message</a></li>
+                                <li><a asp-area="manage" asp-controller="MyProfile" asp-action="Index"><i class="fas fa-address-card"></i>My Profile</a></li>
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);"><i class="fas fa-cog"></i>Settings<span class="ti-angle-left"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li><a asp-area="manage" asp-controller="Setting" asp-action="WebsiteSettings">Website Settings</a></li>
+                                        <li><a asp-area="manage" asp-controller="Setting" asp-action="ContactSettings">Contact Settings</a></li>
+                                        <li><a asp-area="manage" asp-controller="Setting" asp-action="AboutSettings">AboutUs Settings</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    <div class="clearfix"></div>

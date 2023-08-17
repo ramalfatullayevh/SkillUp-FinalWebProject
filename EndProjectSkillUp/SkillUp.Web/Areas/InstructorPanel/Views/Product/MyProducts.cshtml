@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewData["Title"] = "MyProducts";
+}
+
+@model Instructor
+
+<div class="row justify-content-between">
+    <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+        <div class="dashboard_wrap d-flex align-items-center justify-content-between">
+            <div class="arion">
+                <nav class="transparent">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-action="index" asp-controller="dashboard">Go To Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">@(Model.Name + " "+ Model.Surname) 's Products</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="elkios">
+                <a asp-area="instructorPanel" asp-controller="product" asp-action="AddNewProduct" class="add_new_btn" data-target="#catModal"><i class="fas fa-plus-circle mr-1"></i>Add New Product</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="dashboard_wrap">
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 mb-4">
+                    <h6 class="m-0">My Products List</h6>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 mb-2">
+                    <div class="table-responsive">
+                        <table class="table dash_list">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Photo</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Enrolled</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">DiscountPrice</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var product in Model.Products)
+                                {
+                                    <tr>
+                                        <td><img src="~/user/assets/productimg/@product.ImageUrl" width="90px" height="80px" /></td>
+                                        <td>
+                                            <h6>@product.Name</h6>
+                                        </td>
+                                        <td>
+                                            @foreach (var category in product.ProductCategories?.Where(ctg => ctg.ProductId == product.Id))
+                                            {
+                                                <div class="dhs_tags">
+
+                                                    <span>@category.Category.Name</span>
+                                                </div>
+                                            }
+                                        </td>
+                                        <td><span class="smalls">Total: @product.AppUserProducts.Count</span></td>
+                                        <td>
+                                            @if (product.IsActive == true)
+                                            {
+                                                <span class="trip theme-cl theme-bg-light">Active</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="trip text-danger bg-light-danger">Expired</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (product.Price > 0)
+                                            {
+                                                <span class="trip gray">$@product.Price</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="trip theme-cl theme-bg-light">Free</span>
+
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (product.DiscountPrice > 0)
+                                            {
+                                                <span class="trip gray">$@product.DiscountPrice</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="trip gray">$0</span>
+
+                                            }
+                                        </td>
+                                        <td>
+              
+                                            <div class="dropdown show">
+                                                <a class="btn btn-action" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-h"></i>
+                                                </a>
+                                                <div class="drp-select dropdown-menu">
+                                                    <a class="dropdown-item" href="JavaScript:Void(0);">View</a>
+                                                    <a class="dropdown-item" asp-area="instructorPanel" asp-controller="product" asp-action="updateProduct" asp-route-id="@product.Id">Edit</a>
+                                                    <a class="dropdown-item" asp-controller="product" asp-action="deleteProduct" asp-route-id="@product.Id">Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</section>

@@ -1,0 +1,127 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+@model InstructorDashboardVM
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">@(Model.Instructor.Name + " " + Model.Instructor.Surname)</li>
+                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+        <div class="dashboard_stats_wrap">
+            <div class="rounded-circle p-4 p-sm-4 d-inline-flex align-items-center justify-content-center theme-bg mb-2"><div class="position-absolute text-white h5 mb-0"><i class="fas fa-book"></i></div></div>
+            <div class="dashboard_stats_wrap_content"><h4>@Model.Instructor.Courses.Count</h4> <span>Number of Cources</span></div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+        <div class="dashboard_stats_wrap">
+            <div class="rounded-circle p-4 p-sm-4 d-inline-flex align-items-center justify-content-center bg-primary mb-2"><div class="position-absolute text-white h5 mb-0"><i class="fas fa-video"></i></div></div>
+            <div class="dashboard_stats_wrap_content">
+            <h4>
+                    @{
+                        var totalLecture = 0;
+                    }
+                @foreach (var paragraph in Model.Instructor.Courses)
+                {
+                    @foreach (var lecture in paragraph.Paragraphs)
+                    {
+                        totalLecture += lecture.Lectures.Count;   
+                    }
+                }
+                @totalLecture
+            </h4> <span>Number of Lectures</span></div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+        <div class="dashboard_stats_wrap">
+            <div class="rounded-circle p-4 p-sm-4 d-inline-flex align-items-center justify-content-center bg-purple mb-2"><div class="position-absolute text-white h5 mb-0"><i class="fas fa-shopping-basket"></i></div></div>
+            <div class="dashboard_stats_wrap_content"><h4>@Model.Instructor.Products.Count</h4> <span>Number of Products</span></div>
+        </div>
+    </div>
+
+   
+
+   
+
+</div>
+<div class="row">
+
+    <div class="col-lg-8 col-md-12 col-sm-12">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <h5>Lastest Cources</h5>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                @foreach (var instructorCourses in Model.Instructor.Courses.OrderByDescending(c=>c.CreateDate).Take(6))
+                {
+                    <div class="grousp_crs">
+                    <div class="grousp_crs_left">
+                        <div class="grousp_crs_thumb"><img src="~/user/assets/courseimg/@instructorCourses.ImageUrl" width="100%" class="img-fluid" alt="" /></div>
+                        <div class="grousp_crs_caption"><h4>@instructorCourses.Name</h4></div>
+                    </div>
+                        <div class="grousp_crs_right">
+                            <div class="frt_125"><i class="fas fa-comment-dots mr-1"></i>@instructorCourses.CourseReviews.Count</div>
+                            <div class="frt_125"><i class="	fas fa-eye mr-1"></i>@instructorCourses.ViewCount</div>
+                        </div>
+                </div>
+                    
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Notifications</h5>
+                <a  asp-controller="message" asp-action="index"><h6 class="text-danger">Show All...</h6></a>
+            </div>
+            <div class="ground-list ground-hover-list">
+                @foreach (var courses in Model.Instructor.Courses)
+                {
+                    @foreach (var notifications in courses.CourseReviews.OrderByDescending(r=>r.ReviewDate).Take(5))
+                    {
+                        if (notifications.Status == false)
+                        {
+                          <div class="ground ground-list-single">
+                            <div class="rounded-circle p-3 p-sm-4 d-flex align-items-center justify-content-center bg-light-success">
+                                <div class="position-absolute text-success h5 mb-0"><i class="fas fa-user"></i></div>
+                            </div>
+
+                            <div class="ground-content">
+                                <h6><a href="#">@(notifications.AppUser.Name + " " + notifications.AppUser.Surname)</a></h6>
+                                <small class="text-fade">@(notifications.ReviewContent) </small><br>
+                                    <small class="text-fade">Coure : <b>@courses.Name </b></small>
+                                <span class="small">@notifications.ReviewDate</span>
+                            </div>
+                          </div>  
+                            
+                        }
+                        
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>

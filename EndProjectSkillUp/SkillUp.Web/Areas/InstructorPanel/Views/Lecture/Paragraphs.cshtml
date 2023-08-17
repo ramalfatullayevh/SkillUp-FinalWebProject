@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewData["Title"] = "Paragraphs";
+}
+
+@model Course
+
+<div class="row justify-content-between">
+    <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+        <div class="dashboard_wrap d-flex align-items-center justify-content-between">
+            <div class="arion">
+                <nav class="transparent">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-controller="dashboard" asp-action="index">Go To Dashboard</a></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="elkios">
+                <a asp-area="instructorPanel" asp-controller="lecture" asp-action="AddNewCourseParagraph" asp-route-id = "@Model.Id" class="add_new_btn" data-target="#catModal"><i class="fas fa-plus-circle mr-1"></i>Add Course Paragraph</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="dashboard_wrap">
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 mb-4">
+                    <h6 class="m-0"><span class="text-danger">@Model.Name</span> Paragraphs List</h6>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 mb-2">
+                    <div class="table-responsive">
+                        <table class="table dash_list">
+                            <thead>
+                                <tr>
+
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Lectures</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var paragraph in Model.Paragraphs)
+                                {
+                                    <tr>
+                                        <td>
+                                            <h6>@paragraph.Name</h6>
+                                        </td>
+                                        <td>
+                                            <span>Total: @paragraph.Lectures.Count Lectures</span>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown show">
+                                                <a class="btn btn-action" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-h"></i>
+                                                </a>
+                                                <div class="drp-select dropdown-menu">
+                                                    <a class="dropdown-item" asp-area="instructorPanel" asp-controller="lecture" asp-action="lectures" asp-route-id="@paragraph.Id">Lectures</a>
+                                                    <a class="dropdown-item" asp-area="instructorPanel" asp-controller="lecture" asp-action="updateParagraph" asp-route-id="@paragraph.Id">Edit</a>
+                                                    <a class="dropdown-item" asp-area="instructorPanel" asp-controller="lecture" asp-action="deleteParagraph" asp-route-id="@paragraph.Id">Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+

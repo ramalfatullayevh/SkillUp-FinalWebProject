@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewData["Title"] = "Paragraphs";
+}
+
+@model Course
+
+<div class="row justify-content-between">
+    <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+        <div class="dashboard_wrap d-flex align-items-center justify-content-between">
+            <div class="arion">
+                <nav class="transparent">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-area="manage" asp-controller="dashboard" asp-action="index">Go To Dashboard</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="dashboard_wrap">
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 mb-4">
+                    <h6 class="m-0">@Model.Name Paragraphs List</h6>
+                </div>
+            </div>
+
+            <div class="row justify-content-between">
+                <div class="col-xl-4 col-lg-5 col-md-6">
+                    <div class="form-group smalls row align-items-center">
+                        <label class="col-xl-2 col-lg-2 col-sm-2 col-form-label">Search</label>
+                        <div class="col-xl-10 col-lg-10 col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 mb-2">
+                    <div class="table-responsive">
+                        <table class="table dash_list">
+                            <thead>
+                                <tr>
+
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Lectures</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var paragraph in Model.Paragraphs)
+                                {
+                                    <tr>
+                                        <td>
+                                            <h6>@paragraph.Name</h6>
+                                        </td>
+                                        <td>
+                                            <span>Total: @paragraph.Lectures.Count Lectures</span>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown show">
+                                                <a class="btn btn-action" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-h"></i>
+                                                </a>
+                                                <div class="drp-select dropdown-menu">
+                                                    <a class="dropdown-item" asp-area="Manage" asp-controller="Lecture" asp-action="Lectures" asp-route-id="@paragraph.Id">Lectures</a>
+                                                    <a class="dropdown-item" asp-area="Manage" asp-controller="Lecture" asp-action="UpdateParagraph" asp-route-id="@paragraph.Id">Edit</a>
+                                                    <a class="dropdown-item" asp-area="Manage" asp-controller="Lecture" asp-action="DeleteParagraph" asp-route-id="@paragraph.Id">Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row align-items-center justify-content-between">
+                <div class="col-xl-6 col-lg-6 col-md-12">
+                    <nav class="float-right">
+                        <ul class="pagination smalls m-0">
+
+                            @if (ViewBag.CurrentPage > 1)
+                            {
+                                <li class="page-item">
+                                    @if (ViewBag.Query != null)
+                                    {
+                                        <a class="page-link" asp-action="Paragraphs" asp-route-page="@(ViewBag.CurrentPage-1)" asp-route-query="@ViewBag.Query" tabindex="-1" aria-label="Previous">
+                                            <span class="ti-arrow-left"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="page-link" asp-action="Paragraphs" asp-route-page="@(ViewBag.CurrentPage-1)" tabindex="-1" aria-label="Previous">
+                                            <span class="ti-arrow-left"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    }
+                                </li>
+                            }
+                            @if (ViewBag.Query != null)
+                            {
+                                @for (int i = 1; i <= ViewBag.MaxPageCount; i++)
+                                {
+                                    <li class="page-item @(ViewBag.CurrentPage ==i?" disabled":"")">
+                                        <a class="page-link" asp-action="Paragraphs" asp-route-page="@i" asp-route-query="@ViewBag.Query" tabindex="-1">@i</a>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                @for (int i = 1; i <= ViewBag.MaxPageCount; i++)
+                                {
+                                    <li class="page-item @(ViewBag.CurrentPage ==i?" disabled":"")">
+                                        <a class="page-link" asp-action="Paragraphs" asp-route-page="@i" tabindex="-1">@i</a>
+                                    </li>
+
+                                }
+                            }
+                            @if (ViewBag.CurrentPage < ViewBag.MaxPageCount)
+                            {
+                                <li class="page-item">
+                                    @if (ViewBag.Query != null)
+                                    {
+                                        <a class="page-link" asp-action="Paragraphs" asp-route-page="@(ViewBag.CurrentPage+1)" asp-route-query="@ViewBag.Query" tabindex="-1" aria-label="Next">
+                                            <span class="ti-arrow-right"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="page-link" asp-action="Paragraphs" asp-route-page="@(ViewBag.CurrentPage+1)" tabindex="-1" aria-label="Next">
+                                            <span class="ti-arrow-right"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+

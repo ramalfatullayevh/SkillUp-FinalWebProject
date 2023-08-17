@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewData["Title"] = "AddNewCourse";
+}
+
+@model CreateCourseVM
+
+<div class="row justify-content-between">
+    <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+        <div class="dashboard_wrap d-flex align-items-center justify-content-between">
+            <div class="arion">
+                <nav class="transparent">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-controller="dashboard" asp-action="index">Go To Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Add New Course</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="dashboard_wrap">
+
+            <div class="form_blocs_wrap">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger text-center"></div>
+                    <div class="row justify-content-between">
+
+                        <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12">
+                            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <button class="nav-link active" id="v-pills-basic-tab" data-toggle="pill" data-target="#v-pills-basic" type="button" role="tab" aria-controls="v-pills-basic" aria-selected="true">Course Information</button>
+                                <button class="nav-link" id="v-pills-pricing-tab" data-toggle="pill" data-target="#v-pills-pricing" type="button" role="tab" aria-controls="v-pills-pricing" aria-selected="false">Pricing</button>
+                                <button class="nav-link" id="v-pills-pricing-tab" data-toggle="pill" data-target="#v-pills-media" type="button" role="tab" aria-controls="v-pills-pricing" aria-selected="false">Media</button>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-9 col-lg-8 col-md-7 col-sm-12">
+
+                            <div class="tab-content" id="v-pills-tabContent">
+
+                                <div class="tab-pane fade show active" id="v-pills-basic" role="tabpanel" aria-labelledby="v-pills-basic-tab">
+
+                                    <div class="form-group smalls">
+                                        <label asp-for="Name">Course Name*</label>
+                                        <input asp-for="Name" type="text" class="form-control" placeholder="Enter Course Name">
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group smalls">
+                                        <label asp-for="Description">Course Description</label>
+                                        <textarea asp-for="Description" class="form-control" placeholder="Enter Course Description"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+
+                                    </div>
+
+                                    <div class="form-group smalls">
+                                        <label asp-for="CourseOverview">Course Overview</label>
+                                        <textarea asp-for="CourseOverview" class="form-control" placeholder="Enter Course Overview"></textarea>
+                                        <span asp-validation-for="CourseOverview" class="text-danger"></span>
+
+                                    </div>
+                                    <div class="form-group smalls">
+                                        <label asp-for="Requirement">Course Requirement</label>
+                                        <textarea asp-for="Requirement" class="form-control" placeholder="Enter Course Requirement"></textarea>
+                                        <span asp-validation-for="Requirement" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group smalls">
+                                        <label asp-for="Certification">Course Certification</label>
+                                        <textarea asp-for="Certification" class="form-control" placeholder="Enter Course Certification"></textarea>
+                                        <span asp-validation-for="Certification" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group smalls">
+                                        <label>Category*</label>
+                                        <div class="simple-input">
+                                            <select asp-for="CategoryIds" asp-items="@ViewBag.Categories" id="cates" class="form-control"></select>
+                                            <span asp-validation-for="CategoryIds" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="tab-pane fade" id="v-pills-pricing" role="tabpanel" aria-labelledby="v-pills-pricing-tab">
+                                    <div class="form-group smalls">
+                                        <label asp-for="Price">Course Price($)</label>
+                                        <input asp-for="Price" type="text" class="form-control" placeholder="Enter Course Price">
+                                        <span asp-validation-for="Price" class="text-danger"></span>
+
+                                    </div>
+
+                                    <div class="form-group smalls">
+                                        <label asp-for="DiscountPrice">Discount Price($)</label>
+                                        <input asp-for="DiscountPrice" type="text" class="form-control" placeholder="Enter Discount Price">
+                                        <span asp-validation-for="DiscountPrice" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="v-pills-media" role="tabpanel" aria-labelledby="v-pills-media-tab">
+                                      
+                                    <div class="form-group smalls">
+                                        <label asp-for="Image">Add Course Photo</label>
+                                        <div class="custom-file">
+                                            <input asp-for="Image" type="file" class="custom-file-input" id="customFile">
+                                            <label asp-for="Image" class="custom-file-label" for="customFile">Choose file</label>
+                                            <span asp-validation-for="Image" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group smalls">
+                                        <label asp-for="Preview">Add Course Preview Video</label>
+                                        <div class="custom-file">
+                                            <input asp-for="Preview" type="file" class="custom-file-input" id="customFile">
+                                            <label asp-for="Preview" class="custom-file-label" for="customFile">Choose file</label>
+                                            <span asp-validation-for="Preview" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-success" type="submit">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+

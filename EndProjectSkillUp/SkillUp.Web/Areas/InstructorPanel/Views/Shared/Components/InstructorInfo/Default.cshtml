@@ -1,0 +1,185 @@
+﻿@model Instructor
+
+<div id="main-wrapper">
+<div class="header header-light">
+    <div class="container">
+        <nav id="navigation" class="navigation navigation-landscape">
+            <div class="nav-header">
+                <div class="nav-toggle"></div>
+                <div class="mobile_nav">
+                </div>
+            </div>
+            <div class="nav-menus-wrapper" style="transition-property: none;">
+                <ul class="nav-menu">
+                    <li class="active"><a asp-area="default" asp-controller="home" asp-action="index">Back To Home</a></li>
+                </ul>
+                <ul class="nav-menu nav-menu-social align-to-right">
+                    <li class="account-drop">
+                        <a href="javascript:void(0);" class="crs_yuo12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="embos_45"><i class="fas fa-bell"></i><i class="embose_count red">
+                                    @{
+                                        var notifications = 0;
+                                    }
+                                    @foreach (var course in Model.Courses)
+                                    {
+                                       @foreach (var review in course.CourseReviews)
+                                        {
+                                            if (review.Status == false)
+                                           {
+                                                notifications += course.CourseReviews.Count;
+                                           }    
+                                        }
+                                    }
+                                  <span>@notifications</span>
+                            </i></span>
+                        </a>
+                        <div class="dropdown-menu pull-right animated flipInX">
+                            <div class="drp_menu_headr bg-warning">
+                                    <h4>@notifications Notifications</h4>
+                                </div>
+                                <div class="ground-list ground-hover-list">
+                                    @foreach (var course in Model.Courses)
+                                    {
+                                        foreach (var review in course.CourseReviews.Where(r=>r.Status == false).Take(4))
+                                        {
+                                            <div class="ground ground-list-single">
+                                                <div class="rounded-circle p-3 p-sm-4 d-flex align-items-center justify-content-center bg-light-success">
+                                                    <div class="position-absolute text-success h5 mb-0"><i class="fas fa-user"></i></div>
+                                                </div>
+                                                <div class="ground-content">
+                                                    <h6><a asp-controller="message" asp-action="index"><b>@(review.AppUser.Name + " " + review.AppUser.Surname)</b></a></h6>
+                                                    <small class="text-fade">@review.ReviewContent</small><br>
+                                                    <small class="text-fade"><b>Course : @course.Name</b></small>
+                                                    <span class="small">@review.ReviewDate</span>
+                                                </div>
+                                            </div>
+                                        }
+                                        if(course.CourseReviews.Count>4){
+                                            <a asp-controller="Message" asp-action="Index" style="font-weight:bold; text-align:center; width:100%; color:#ff9b20;">Show more </a>
+                                        } 
+                                    }
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="btn-group account-drop">
+                            <a href="javascript:void(0);" class="crs_yuo12 btn btn-order-by-filt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @if (Model.ImageUrl == null)
+                                {
+                                    <img src="~/user/assets/userimg/userimage.png" width="90" alt="">
+                                }
+                                else
+                                {
+                                    <img src="~/user/assets/instructorimg/@Model.ImageUrl" width="90" alt="">
+                                }
+                            </a>
+                            <div class="dropdown-menu pull-right animated flipInX">
+                                <div class="drp_menu_headr">
+                                    <h4>Hi, @(Model.Name + " " + Model.Surname)</h4>
+                                </div>
+                                <ul>
+                                    <li><a asp-area="instructorpanel" asp-controller="dashboard" asp-action="index"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
+                                    <li><a asp-area="instructorpanel" asp-controller="myprofile" asp-action="index"><i class="fa fa-user-tie"></i>My Profile</a></li>
+                                    <li><a asp-area="instructorpanel" asp-controller="course" asp-action="mycourses"><i class="fas fa-shopping-basket"></i>Manage Courses</a></li>
+                                    <li><a asp-area="instructorpanel" asp-controller="product" asp-action="myproducts"><i class="fas fa-shopping-basket"></i>Manage Products</a></li>
+                                        <li><a asp-area="instructorpanel" asp-controller="message" asp-action="index"><i class="fas fa-comments"></i>Messages</a></li>
+                                    <li><a asp-area="default" asp-controller="account" asp-action="signout"><i class="fa fa-unlock-alt"></i>Sign Out</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<section class="gray pt-4">
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-lg-3 col-md-3">
+                <div class="dashboard-navbar">
+
+                    <div class="d-user-avater">
+                        @if (Model.ImageUrl == null)
+                        {
+                            <img src="~/user/assets/userimg/userimage.png" width="250" alt="">
+                        }
+                        else
+                        {
+                            <img src="~/user/assets/instructorimg/@Model.ImageUrl" width="250" alt="">
+                        }
+                        <h4>@(Model.Name + " " + Model.Surname)</h4>
+                            <span>
+                                @foreach (var profession in Model.InstructorProfessions.Where(p => p.InstructorId == Model.Id))
+                                {
+                                    <span class="text-danger">@profession.Profession.Name</span>
+                                }
+                            </span>
+                        <div class="elso_syu89">
+                            <ul>
+                                @if (Model.FaceBookUrl != null)
+                                {
+                                    <li><a href="@Model.FaceBookUrl"><i class="ti-facebook"></i></a></li>
+                                }
+                                @if (Model.TwitterUrl != null)
+                                {
+                                    <li><a href="@Model.TwitterUrl"><i class="ti-twitter"></i></a></li>
+                                }
+                                @if (Model.InstagramUrl != null)
+                                {
+                                    <li><a href="@Model.InstagramUrl"><i class="ti-instagram"></i></a></li>
+                                }
+                                @if (Model.LinkedInUrl != null)
+                                {
+                                    <li><a href="@Model.LinkedInUrl"><i class="ti-linkedin"></i></a></li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="elso_syu77">
+                            <div class="one_third"><div class="one_45ic text-success bg-light-success"><i class="fas fa-file-invoice"></i></div><span>@Model.Courses.Count Courses</span></div>
+                                <div class="one_third"><div class="one_45ic text-warning bg-light-warning"><i class="fas fa-shopping-basket"></i></div><span>@Model.Products.Count Products</span></div>
+                        </div>
+                    </div>
+
+                    <div class="d-navigation">
+                        <ul id="side-menu">
+                            <li class="active"><a asp-area="InstructorPanel" asp-controller="Dashboard" asp-action="Index"><i class="fas fa-th"></i>Dashboard</a></li>
+                            <li class="dropdown">
+                                <a href="javascript:void(0);"><i class="fas fa-shopping-basket"></i>Courses<span class="ti-angle-left"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li><a asp-area="InstructorPanel" asp-controller="Course" asp-action="MyCourses">My Courses</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="javascript:void(0);"><i class="fas fa-shopping-basket"></i>Products<span class="ti-angle-left"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li><a asp-area="InstructorPanel" asp-controller="Product" asp-action="MyProducts">My Products</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="javascript:void(0);"><i class="fas fa-gem"></i>Enrollment<span class="ti-angle-left"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li><a asp-area="InstructorPanel" asp-controller="Enrollment" asp-action="EnrollCourse">Enroll a Couse</a></li>
+                                    <li><a asp-area="InstructorPanel" asp-controller="Enrollment" asp-action="EnrollProduct">Enroll a Product</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="javascript:void(0);"><i class="fas fa-archive"></i>Report<span class="ti-angle-left"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li><a asp-area="InstructorPanel" asp-controller="Report" asp-action="myCourseRevenue">My Courses Revenue</a></li>
+                                        <li><a asp-area="InstructorPanel" asp-controller="Report" asp-action="MyProductRevenue">My Products Revenue</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a asp-area="InstructorPanel" asp-controller="Message" asp-action="Index"><i class="fas fa-comments"></i>Message</a></li>
+                            <li><a asp-area="InstructorPanel" asp-controller="MyProfile" asp-action="Index"><i class="fas fa-address-card"></i>My Profile</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-9 col-sm-12">
+                <div class="clearfix"></div>

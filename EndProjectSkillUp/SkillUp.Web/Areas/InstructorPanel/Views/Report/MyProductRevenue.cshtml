@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "MyProductRevenue";
+}
+
+
+@model Instructor
+
+<div class="row justify-content-between">
+    <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+        <div class="dashboard_wrap d-flex align-items-center justify-content-between">
+            <div class="arion">
+                <nav class="transparent">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a  asp-controller="dashboard" asp-action="index">Go To Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">My Products Revenue</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="dashboard_wrap">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 mb-2">
+                    <div class="table-responsive">
+                        <table class="table dash_list">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Enrolled User Count</th>
+                                    <th scope="col">My Revenue (75%)</th>
+                                    <th scope="col">Create Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var revenue in Model.Products)
+                                {
+                                    <tr>
+                                        <td><h6>@revenue.Name</h6></td>
+                                        <td><h6>@revenue.AppUserProducts.Count</h6></td>
+                                        <td>
+                                            <span class="smalls lg">
+                                                @if (revenue.DiscountPrice>0 && revenue.Price == 0)
+                                                {
+                                                    <span class="trip gray">$@((revenue.DiscountPrice * revenue.AppUserProducts.Count)*0.75)</span>
+                                                }
+                                                @if (revenue.Price > 0)
+                                                {
+                                                    <span class="trip gray">$@((revenue.Price * revenue.AppUserProducts.Count)*0.75)</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="trip theme-cl theme-bg-light">Free</span>
+
+                                                }
+                                            </span>
+                                        </td>
+                                        <td><span class="smalls lg">@revenue.CreateDate.ToString( "dd-MM-yyyy" )</span></td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+

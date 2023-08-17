@@ -1,0 +1,175 @@
+﻿
+@{
+    ViewData["Title"] = "AdminProductRevenue";
+}
+
+@model PaginationVM<Product>
+
+<div class="row justify-content-between">
+    <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+        <div class="dashboard_wrap d-flex align-items-center justify-content-between">
+            <div class="arion">
+                <nav class="transparent">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-area="manage" asp-controller="dashboard" asp-action="index">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Admin Products Revenue</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="dashboard_wrap">
+
+            <div class="row justify-content-between">
+                <div class="col-xl-4 col-lg-5 col-md-6">
+                    <div class="form-group smalls row align-items-center">
+                       <form asp-controller="report" asp-action="adminproductrevenue">
+                            <div class="form-group">
+                                <div style="margin-left:15px" class="input-with-icon">
+                                    <input name="query" type="text" class="form-control" placeholder="Search Products">
+                                    <i class="ti-search"></i>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 mb-2">
+                    <div class="table-responsive">
+                        <table class="table dash_list">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Course Name</th>
+                                    <th scope="col">Instructor Name</th>
+                                    <th scope="col">Total Amount</th>
+                                    <th scope="col">Admin Revenue (25%)</th>
+                                    <th scope="col">Create Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var products in Model.Items)
+                                {
+                                    <tr>
+                                        <td><h6>@products.Name</h6></td>
+                                        <td><span class="smalls lg">@(products.Instructor.Name + " " + products.Instructor.Surname) </span></td>
+
+                                        <td>
+                                            <span class="smalls lg">
+                                                @if (products.Price > 0)
+                                                {
+                                                    <span class="trip gray">$@(products.Price * products.AppUserProducts.Count)</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="trip theme-cl theme-bg-light">Free</span>
+
+                                                }
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span>
+                                                @if (products.Price > 0)
+                                                {
+                                                    <span class="trip gray">$@((products.Price * products.AppUserProducts.Count) * 0.25)</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="trip theme-cl theme-bg-light">$0</span>
+
+                                                }
+                                            </span>
+                                        </td>
+                                        <td><span class="smalls lg">@products.CreateDate.ToString( "dd-MM-yyyy" )</span></td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row align-items-center justify-content-between">
+                <div class="col-xl-6 col-lg-6 col-md-12">
+                    <nav class="float-right">
+                        <ul class="pagination smalls m-0">
+                            @if (Model.CurrentPage > 1)
+                            {
+                                <li class="page-item">
+                                    @if (Model.Query != null)
+                                    {
+                                        <a class="page-link" asp-action="adminproductrevenue" asp-route-page="@(Model.CurrentPage-1)" asp-route-query="@Model.Query" tabindex="-1" aria-label="Previous">
+                                            <span class="ti-arrow-left"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="page-link" asp-action="adminproductrevenue" asp-route-page="@(Model.CurrentPage-1)" tabindex="-1" aria-label="Previous">
+                                            <span class="ti-arrow-left"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    }
+                                </li>
+                            }
+                            @if (Model.Query != null)
+                            {
+                                @for (int i = 1; i <= Model.MaxPageCount; i++)
+                                {
+                                    <li class="page-item @(Model.CurrentPage ==i?" disabled":"")">
+                                        <a class="page-link" asp-action="adminproductrevenue" asp-route-page="@i" asp-route-query="@Model.Query" tabindex="-1">@i</a>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                @for (int i = 1; i <= Model.MaxPageCount; i++)
+                                {
+                                    <li class="page-item @(Model.CurrentPage ==i?" disabled":"")">
+                                        <a class="page-link" asp-action="adminproductrevenue" asp-route-page="@i" tabindex="-1">@i</a>
+                                    </li>
+
+                                }
+                            }
+                            @if (Model.CurrentPage < Model.MaxPageCount)
+                            {
+                                <li class="page-item">
+                                    @if (Model.Query != null)
+                                    {
+                                        <a class="page-link" asp-action="adminproductrevenue" asp-route-page="@(Model.CurrentPage+1)" asp-route-query="@Model.Query" tabindex="-1" aria-label="Next">
+                                            <span class="ti-arrow-right"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="page-link" asp-action="adminproductrevenue" asp-route-page="@(Model.CurrentPage+1)" tabindex="-1" aria-label="Next">
+                                            <span class="ti-arrow-right"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+</section>

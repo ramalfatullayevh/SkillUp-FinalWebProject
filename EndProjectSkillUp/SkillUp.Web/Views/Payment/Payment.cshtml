@@ -1,0 +1,21 @@
+﻿@using Microsoft.Extensions.Options
+@model AppUser
+<div class="text-center" style="margin-top:71px; margin-bottom:73px">
+    <div>
+        <form asp-action="charge" asp-controller="payment" method="post">
+            <article>
+                <label>Add Balance </label><br />
+                <input asp-for="Wallet" /><br />
+                <span class="text-danger">Example : 10,00 ; 5,36 </span>
+            </article>
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-locale="auto"
+                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                    data-key="pk_test_51MWkJJEJyypIB3nZIcEVEXYlLeZr1v3jb3GP7Ip1Svz4keWr9L4RU8MYAj6lekUFEm6UolJyzrjoQL2fkvOeeVQd00gOs9vVC4"
+                    data-description="Sample charge">
+            </script>
+        </form>
+
+    </div>
+</div>
+

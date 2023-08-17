@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewData["Title"] = "MyCourses";
+}
+
+@model Instructor
+<div class="row justify-content-between">
+    <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+        <div class="dashboard_wrap d-flex align-items-center justify-content-between">
+            <div class="arion">
+                <nav class="transparent">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-controller="dashboard" asp-action="index">Go To Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">@(Model.Name + " " + Model.Surname) 's Courses</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="elkios">
+                <a  asp-controller="Course" asp-action="AddNewCourse" class="add_new_btn" data-target="#catModal"><i class="fas fa-plus-circle mr-1"></i>Add New Course</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="dashboard_wrap">
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 mb-4">
+                    <h6 class="m-0">My Courses List</h6>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 mb-2">
+                    <div class="table-responsive">
+                        <table class="table dash_list">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Photo</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Lectures</th>
+                                    <th scope="col">Enrolled</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">DiscountPrice</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var course in Model.Courses)
+                                {
+                                   <tr>
+                                        <td><img src="~/user/assets/courseimg/@course.ImageUrl" width="100px" height="70px" /></td>
+                                    <td><h6>@course.Name</h6></td>
+                                    <td>
+                                        @foreach (var category in course?.CourseCategories?.Where(ctg=>ctg.CourseId == course.Id))
+                                        {<div class="dhs_tags">
+
+                                                    <span>@category.Category?.Name</span>
+                                                </div>
+                                        }
+                                   </td>
+                                     <td><span class="smalls">
+                                        
+                                           <span>@course.Paragraphs?.Sum(x=>x.Lectures.Count) Lectures</span>
+                                         
+                                                </span></td>
+                                    <td><span class="smalls">Total: @course.AppUserCourses.Count</span></td>
+                                    <td>
+                                        @if (course.IsActive == true)
+                                        {
+                                          <span class="trip theme-cl theme-bg-light">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="trip text-danger bg-light-danger">Expired</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (course.Price>0)
+                                        {
+                                            <span class="trip gray">$@course.Price</span>    
+                                        }
+                                        else
+                                        {
+                                             <span class="trip theme-cl theme-bg-light">Free</span>
+
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (course.DiscountPrice > 0)
+                                        {
+                                            <span class="trip gray">$@course.DiscountPrice</span>
+                                        }
+                                        else
+                                        {
+                                                <span class="trip gray">$0</span>
+
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="dropdown show">
+                                            <a class="btn btn-action" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </a>
+                                            <div class="drp-select dropdown-menu">
+                                                    <a class="dropdown-item" asp-area="instructorpanel" asp-controller="lecture" asp-action="paragraphs" asp-route-id = "@course.Id">Paragraphs</a>
+                                                    <a class="dropdown-item" asp-area="instructorpanel" asp-controller="course" asp-action="updatecourse" asp-route-id="@course.Id">Edit</a>
+                                                    <a class="dropdown-item" asp-area="instructorpanel" asp-controller="course" asp-action="deletecourse" asp-route-id="@course.Id">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                    
+                                }
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</section>

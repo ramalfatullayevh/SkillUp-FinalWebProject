@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@model Lecture
+<section class="page-title" style="padding:0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+
+                <div class="breadcrumbs-wrap">
+                    <h1 class="breadcrumb-title">@Model.Paragraph.Name Video</h1>
+                    <nav class="transparent">
+                        <ol class="breadcrumb p-0 bg-white">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item active theme-cl" aria-current="">@Model.Name</li>
+                        </ol>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pt-0" style="height:350px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12">
+                <div class="table-responsive">
+                    <div class="tb_course_thumb"><video style="width:600px; margin-left:165px"  src="~/user/assets/coursevideo/@Model.VideoUrl" autoplay controls></video></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

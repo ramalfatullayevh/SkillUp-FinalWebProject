@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Themezhub" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SkillUp - Online Learning Platform</title>
+
+    <!-- Custom CSS -->
+    <link href="~/user/assets/css/styles.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div id="main-wrapper">
+        <div class="header theme-bg light-menu">
+            <div class="container">
+                <nav id="navigation" class="navigation navigation-landscape">
+                    <div class="nav-header">
+                        <a class="nav-brand" href="#">
+                            <img src="~/user/assets/img/light-logo.png" class="logo" alt="" />
+                        </a>
+                        <div class="nav-toggle"></div>
+                        <div class="mobile_nav">
+                            <ul>
+                                <li>
+                                    <a asp-controller="account" asp-action="signin" data-toggle="modal" data-target="#login" class="crs_yuo12 w-auto text-white theme-bg">
+                                        <span class="embos_45"><i class="fas fa-sign-in-alt mr-1"></i>Sign In</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nav-menus-wrapper">
+                        <ul class="nav-menu">
+
+                            <li class="active">
+                                <a asp-controller="Home" asp-action="Index">Home<span class="submenu-indicator"></span></a>
+                                <ul class="nav-dropdown nav-submenu">
+                                    <li><a asp-controller="Home" asp-action="About">ABOUT US</a></li>
+                                    <li><a asp-controller="Home" asp-action="FAQs">FAQs</a></li>
+                                    <li><a asp-controller="Home" asp-action="Contact">CONTACT US</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a asp-controller="Course" asp-action="FindCourses">Courses<span class="submenu-indicator"></span></a>
+                                <ul class="nav-dropdown nav-submenu">
+                                    <li><a asp-controller="Category" asp-action="Index">EXPLORE CATEGORY</a></li>
+                                    <li><a asp-controller="Course" asp-action="FindCourses">FIND COURSES</a></li>
+                                    <li><a asp-controller="Instructor" asp-action="FindInstructor">FIND INSTRUCTORS</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="#">Shop<span class="submenu-indicator"></span></a>
+                                <ul class="nav-dropdown nav-submenu">
+                                    <li><a asp-controller="Shop" asp-action="Products">PRODUCT</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        @await Component.InvokeAsync("Wallet")
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        @RenderBody()
+        <section class="theme-bg call_action_wrap-wrap">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="call_action_wrap">
+                            <div class="call_action_wrap-head">
+                                <h3>Do You Have Questions ?</h3>
+                                <span>We'll help you to grow your career and growth.</span>
+                            </div>
+                            <a asp-controller="Home" asp-action="Contact" class="btn btn-call_action_wrap">Contact Us Today</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="dark-footer skin-dark-footer style-2">
+            <div class="footer-middle">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-5">
+                            <div class="footer_widget">
+                                <img src="~/user/assets/img/logo-light.png" class="img-footer small mb-2" alt="" /><br />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-7 ml-auto">
+                            <div class="row">
+
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="footer_widget">
+                                        <h4 class="widget_title">Pages</h4>
+                                        <ul class="footer-menu">
+                                            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                                            <li><a asp-controller="Home" asp-action="About">About Us</a></li>
+                                            <li><a asp-controller="Home" asp-action="FAQs">Faq's</a></li>
+                                            <li><a asp-controller="Home" asp-action="Contact">Contact US</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="footer_widget">
+                                        <h4 class="widget_title">Course</h4>
+                                        <ul class="footer-menu">
+                                            <li><a asp-controller="Category" asp-action="Index">Explore Category</a></li>
+                                            <li><a asp-controller="Course" asp-action="FindCourses">Courses</a></li>
+                                            <li><a asp-controller="Instructor" asp-action="FindCourses">Instructors</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="footer_widget">
+                                        <h4 class="widget_title">Shop</h4>
+                                        <ul class="footer-menu">
+                                            <li><a asp-controller="Shop" asp-action="Products">Products</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-12 col-md-12 text-center">
+                            <p class="mb-0">© 2023 SkillUp. Developed By <a href="#">Ramal</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <a id="back2Top" class="top-scroll" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>
+    </div>
+    <script src="~/user/assets/js/jquery.min.js"></script>
+    <script src="~/user/assets/js/popper.min.js"></script>
+    <script src="~/user/assets/js/bootstrap.min.js"></script>
+    <script src="~/user/assets/js/select2.min.js"></script>
+    <script src="~/user/assets/js/slick.js"></script>
+    <script src="~/user/assets/js/moment.min.js"></script>
+    <script src="~/user/assets/js/daterangepicker.js"></script>
+    <script src="~/user/assets/js/summernote.min.js"></script>
+    <script src="~/user/assets/js/metisMenu.min.js"></script>
+    <script src="~/user/assets/js/custom.js"></script>
+    <script src="~/user/assets/js/searchcourse.js"></script>
+</body>
+</html>

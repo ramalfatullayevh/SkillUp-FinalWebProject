@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "SkillUp-About";
+}
+
+<section class="page-title gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+
+                <div class="breadcrumbs-wrap">
+                    <h1 class="breadcrumb-title">Who We Are?</h1>
+                    <nav class="transparent">
+                        <ol class="breadcrumb p-0">
+                            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li class="breadcrumb-item active theme-cl" aria-current="page">About Us</li>
+                        </ol>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@await Component.InvokeAsync("AboutUs")

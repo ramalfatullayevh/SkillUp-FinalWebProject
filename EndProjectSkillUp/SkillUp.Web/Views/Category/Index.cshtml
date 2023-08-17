@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "SkillUp-Category";
+}
+@model ICollection<Category>
+<section class="page-title gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+
+                <div class="breadcrumbs-wrap">
+                    <h1 class="breadcrumb-title">Explore Category</h1>
+                    <nav class="transparent">
+                        <ol class="breadcrumb p-0">
+                            <li class="breadcrumb-item"><a asp-controller="home" asp-action="index">Home</a></li>
+                            <li class="breadcrumb-item active theme-cl" aria-current="page">All Categories</li>
+                        </ol>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row justify-content-center">
+            @foreach (var category in Model)
+            {
+                 <div class="col-xl-3 col-lg-4 col-md-4">
+                <div class="cates_crs_wrip">
+                    <div class="row">
+                    <div class="col crs_trios">
+                        <div class="crs_cate_icon"><i class="@category.IconUrl"></i></div>
+                    </div>
+                        <div class="col">
+                       <h6 class="text-white">@category.CourseCategories.Count Course</h6>
+                        </div>
+                        </div>
+                    <div class="row crs_capt_cat">
+                        <div class="col">
+                                <a asp-controller="Category" asp-action="CourseCategory" asp-route-id="@category.Id"><h4>@category.Name</h4> </a>
+                        </div>
+                    </div>
+                        <div class="row crs_capt_cat">
+                            <div class="col">
+                        <p>@category.Description</p>
+                        </div>
+                        </div>
+                </div>
+            </div>
+            }
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-xl-12 col-lg-12 col-md-12 text-center">
+            </div>
+        </div>
+    </div>
+</section>

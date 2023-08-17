@@ -1,0 +1,232 @@
+﻿@{
+    ViewData["Title"] = "SkillUp-ProductDetail";
+}
+
+@model Product
+
+<section class="page-title gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+
+                <div class="breadcrumbs-wrap">
+                    <h1 class="breadcrumb-title">Product Detail</h1>
+                    <nav class="transparent">
+                        <ol class="breadcrumb p-0">
+                            <li class="breadcrumb-item"><a asp-controller="home" asp-action="index">Home</a></li>
+                            <li class="breadcrumb-item active theme-cl" aria-current="page">Product Detail</li>
+                        </ol>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="pr_detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+
+                <div class="woocommerce single_product quick_view_wrap">
+
+                    <div class="woo-single-images">
+                        <div class="feature-style-single">
+                            <img src="~/user/assets/productimg/@Model.ImageUrl" width="296px" height="300px" alt="product-book-06">
+                        </div>
+                    </div>
+
+                    <div class="summary entry-summary">
+                        <div class="woo_inner">
+                            <h2 class="woo_product_title">
+                                <a href="#">@Model.Name</a>
+                            </h2>
+                            <ul class="woo_info">
+                                <li><strong>Category:</strong>
+                                    @foreach (var category in Model?.ProductCategories.Where(ctg => ctg.ProductId == Model.Id))
+                                    {
+                                      <span>@category.Category.Name</span>
+                                    }
+                                </li>
+                            </ul>
+                            <div class="woo_price_rate">
+                                <div class="woo_price_fix">
+                                    <h3 class="mb-0 theme-cl">
+                                        @if (Model.DiscountPrice==0)
+                                        {
+                                            if (Model.Price > 0)
+                                            {
+                                                <h3 class ="mb-0 theme-cl">$@Model.Price</h3>
+                                            }
+                                            if (Model.Price == 0)
+                                            {
+                                                <h3 class="mb-0 theme-cl">Free</h3>
+                                            }
+                                        }
+                                        @if (Model.DiscountPrice>0)
+                                        {
+                                            <h3 class ="mb-0 theme-cl">$@Model.DiscountPrice</h3>
+                                        }
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="woo_short_desc">
+                                <p>
+                                    @if (Model.Description.Length>40)
+                                    {
+                                        <span>@Model.Description.Substring(0,40).</span>
+                                    }
+                                    @if (Model.Description.Length <= 40)
+                                    {
+                                        <span>@Model.Description.</span>
+                                    }
+                                </p>
+                                 
+                            </div>
+                            <div class="woo_buttons">
+                                     @if (!(Model.AppUserProducts.Any(a => a.AppUser.UserName == User.Identity.Name)))
+                                     {
+                                        if (User.Identity.IsAuthenticated)
+                                        {
+                                            <a asp-action="BuyProduct" asp-controller="Payment" asp-route-id="@Model.Id"   class="btn btn-success">Buy Now</a>
+                                        
+                                        }
+                                        else
+                                        {
+                                          <a asp-action="signin" asp-controller="account"  class="btn btn-success">Buy Now</a>
+
+                                        }
+
+                                     }
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="pt-0">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-10 col-md-12 col-sm-12">
+
+                <div class="property_block_wrap_header">
+                    <ul class="nav nav-tabs customize-tab tabs_creative" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">Description</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="payment-tab" data-toggle="tab" href="#payment" role="tab" aria-controls="payment" aria-selected="false">Extra Detail</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="upgrade-tab" data-toggle="tab" href="#upgrade" role="tab" aria-controls="upgrade" aria-selected="false">Reviews</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="tab-content tabs_content_creative" id="myTabContent">
+
+                    <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                        <p>
+                            @if (Model.Description.Length > 50)
+                            {
+                                <span>@Model.Description.Substring(0,100)</span>
+                            }
+                            @if (Model.Description.Length <= 50)
+                            {
+                                <span>@Model.Description</span>
+                            }
+                        </p>
+                    </div>
+
+                    <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Author: </th>
+                                        <td>
+                                           <span>@(Model.Instructor.Name + " " + Model.Instructor.Surname)</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">SKU</th>
+                                        <td>#@Model.SKU</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="upgrade" role="tabpanel" aria-labelledby="upgrade-tab">
+                        @if (Model.ProductReviews.Count == 0)
+                        {
+                        <div class="alert alert-success" role="alert">
+                            No any reviews yet
+                        </div>
+                            
+                        }
+                        else
+                        {
+                             <div class="list-single-main-item fl-wrap">
+                            <div class="list-single-main-item-title fl-wrap">
+                                <h3>Course Reviews -  <span> @Model.ProductReviews.Count </span></h3>
+                            </div>
+                            <div class="reviews-comments-wrap">
+                                @foreach (var review in Model.ProductReviews)
+                                {
+                                    <div class="reviews-comments-item">
+                                        <div class="review-comments-avatar">
+                                            @if (review.Appuser.ImageUrl != null)
+                                            {
+                                                <img src="~/user/assets/userimg/@review.Appuser.ImageUrl" class="img-fluid" alt="">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/user/assets/userimg/userimage.png" class="img-fluid" alt="">
+                                            }
+                                        </div>
+                                        <div class="reviews-comments-item-text">
+                                            <h4><a href="#">@(review.Appuser.Name + " " + review.Appuser.Surname)</a><span class="reviews-comments-item-date"><i class="ti-calendar theme-cl"></i>@review.ReviewDate.ToString("MM/dd/yyyy h:mm tt")</span></h4>
+                                            <div class="clearfix"></div>
+                                            <p>"@review.ReviewContent"</p>
+                                            <div class="pull-left reviews-reaction">
+                                            </div>
+                                        </div>
+                                    </div>
+                                } </div>
+                           
+                        </div>
+                   
+                        }
+                    </div>
+                    </div>
+                @{
+                    CreateProductReviewVM reviewVM = new CreateProductReviewVM();
+                    reviewVM.ReviewContent = "";
+                    reviewVM.ProductId = Model.Id;
+                    reviewVM.Product = Model;
+                }
+                @if (Model.AppUserProducts.Any(a => a.AppUser.UserName == User.Identity.Name))
+                {
+                    @await Html.PartialAsync("_ProductReviewPartial", reviewVM, new ViewDataDictionary(ViewData){{"productid" , Model.Id}})
+                }
+                         
+               </div>
+             
+            </div>
+
+        </div>
+    </div>
+</section>

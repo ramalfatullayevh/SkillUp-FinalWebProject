@@ -1,0 +1,139 @@
+﻿@{
+    ViewData["Title"] = "SkillUp-InstructorDetail";
+}
+@model Instructor
+
+<div class="ed_detail_head">
+    <div class="container">
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-3 col-md-12 col-sm-12">
+                <div class="authi_125">
+                    <div class="authi_125_thumb">
+                          <video src="~/user/assets/instructorpreview/@Model.PreviewVideoUrl" style="width:100%" alt="" controls loop></video>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-12 col-sm-12">
+                <div class="dlkio_452">
+                    <div class="ed_detail_wrap">
+                        <div class="crs_cates cl_1">
+                            <span>
+                            @foreach (var professions in Model.InstructorProfessions)
+                            {
+                                    <span style="padding:5px">@professions.Profession.Name</span>
+                            }
+                            </span>
+                        </div>
+                        <div class="ed_header_caption">
+                            <h2 class="ed_title">@(Model.Name + " " + Model.Surname)</h2>
+                            <ul>
+                                <li><i class="ti-video-camera"></i>@Model.Courses.Count Courses</i></li>
+                                <li>
+                                    <i class="ti-control-forward"></i>
+                                    @{
+                                        var totalLecture = 0;
+                                    }
+                                    @foreach (var paragraph in Model.Courses)
+                                    {
+                                        @foreach (var lecture in paragraph.Paragraphs)
+                                        {
+                                            totalLecture += lecture.Lectures.Count;
+                                        }
+                                    }
+                                    <span>@totalLecture Lectures </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="ed_header_short">
+                            <p><b><i>@Model.Description</i></b></p>
+                        </div>
+                    </div>
+                    <div class="dlkio_last">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="gray">
+    <div class="container">
+        <div class="row justify-content-center">
+            @foreach (var course in Model.Courses)
+            {
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                    <div class="crs_grid">
+                        <div  class="crs_grid_thumb">
+                            <img src="~/user/assets/courseimg/@course.ImageUrl"  style="width:400px; height:310px" class="img-fluid rounded" alt="" />
+                        </div>
+                        <div class="crs_grid_caption">
+                            <div class="crs_flex">
+                                <div class="crs_fl_first">
+                                    <div class="crs_cates cl_7">
+                                        <span>
+                                            @foreach (var category in course.CourseCategories.Where(ctg => ctg.CourseId == course.Id))
+                                            {
+                                                <span>@category.Category.Name</span>
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="crs_fl_last">
+                                    <div class="crs_inrolled"><strong>@course.AppUserCourses.Count</strong>Enrolled</div>
+                                </div>
+                            </div>
+                            <div class="crs_title"><h4><a asp-controller="Course" asp-action="CourseDetail" asp-route-id="@course.Id" class="crs_title_link">@course.Name</a></h4></div>
+                            <div class="crs_info_detail">
+                                <ul>
+                                    @{
+                                        TimeSpan totalduration = new TimeSpan(0, 0, 0);
+                                        @foreach (var paragraphs in course.Paragraphs)
+                                        {
+                                            @foreach (var lectures in paragraphs.Lectures)
+                                            {
+                                                TimeSpan timeSpan = TimeSpan.ParseExact(lectures.Duration.Replace("hr ", ":").Replace("min ", ":").Replace("sec", ""), @"h\:m\:s", null);
+                                                totalduration = totalduration.Add(timeSpan);
+                                            }
+                                        }
+                                        string duration = string.Format("{0:%h}hr {0:%m}min {0:%s}sec", totalduration);
+                                    }
+                                    <li><i class="fa fa-video text-success"></i><span>@course.Paragraphs.Sum(x=>x.Lectures.Count) Lectures</span></li>
+
+                                    <li><i class="fa fa-clock text-danger"></i><span>@duration</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="crs_grid_foot">
+                            <div class="crs_flex">
+                                <div class="crs_fl_first">
+                                    <a asp-controller="Course" asp-action="CourseDetail" asp-route-id="@course.Id">Go To Course</a>
+                                </div>
+                                <div class="crs_fl_last">
+                                    <div class="crs_price">
+                                        <h2>
+                                            <span class="currency"></span>
+                                            @if (course.DiscountPrice > 0)
+                                            {
+                                                <span class="theme-cl">$@course.DiscountPrice</span>
+                                            }
+                                            @if (course.DiscountPrice == 0 && course.Price > 0)
+                                            {
+                                                <span class="theme-cl">$@course.Price</span>
+                                            }
+                                            @if (course.DiscountPrice == 0 && course.Price == 0)
+                                            {
+                                                <span class="theme-cl">FREE</span>
+                                            }
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row justify-content-center">
+        </div>
+    </div>
+</section>

@@ -1,0 +1,310 @@
+﻿@{
+    ViewData["Title"] = "SkillUp-Index";
+}
+
+@model IndexVM
+
+@await Component.InvokeAsync("HomeInfo")
+
+<section class="min gray">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-10 text-center">
+                <div class="sec-heading center mb-4">
+                    <h2>Recent Listed <span class="theme-cl">Cources</span></h2>
+                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="slide_items">
+
+                    @foreach (var item in Model.Courses.OrderByDescending(c=>c.CreateDate).Take(16))
+                    {
+                        <!-- Single Item -->
+                        <div class="lios_item">
+                            <div class="crs_grid shadow_none brd">
+                                <div class="crs_grid_thumb">
+                                    <a asp-action="coursedetail" asp-controller="course" asp-route-id="@item.Id" class="crs_detail_link">
+                                        <img style="width:350px; height:208px" src="~/user/assets/courseimg/@item.ImageUrl"  alt="" />
+                                    </a>
+                                    <div class="crs_video_ico">
+                                        <i class="fa fa-play"></i>
+                                    </div>
+                                    <div class="crs_locked_ico">
+                                        <i class="fa fa-lock"></i>
+                                    </div>
+                                </div>
+                                <div class="crs_grid_caption">
+                                    <div class="crs_flex">
+                                        <div class="crs_fl_first">
+                                            <div class="crs_cates cl_6"><span>
+                                                @foreach (var category in item.CourseCategories.Where(ctg=>ctg.CourseId == item.Id))
+                                                    {
+                                                        <span>@category.Category.Name</span>
+                                                    }
+                                            </span></div>
+                                        </div>
+                                        <div class="crs_fl_last">
+                                            <div class="crs_price"><h2><span class="currency"></span>
+                                                @if (item.DiscountPrice>0)
+                                                {
+                                                     <span class="theme-cl">$@item.DiscountPrice</span >      
+                                                }
+                                                 @if (item.DiscountPrice == 0 && item.Price>0)
+                                                 {
+                                                   <span class="theme-cl">$@item.Price</span>
+                                                 }
+                                                    @if (item.DiscountPrice == 0 && item.Price == 0)
+                                                    {
+                                                        <span class="theme-cl">FREE</span>
+                                                    }
+                                           </h2></div>
+                                        </div>
+                                    </div>
+                                    <div class="crs_title"><h4><a asp-controller="Course" asp-action="CourseDetail" asp-route-id ="@item.Id" class="crs_title_link">@item.Name</a></h4></div>
+                                    <div class="crs_info_detail">
+                                        <ul>
+                                            @{
+                                                TimeSpan totalduration = new TimeSpan(0, 0, 0);
+                                                            @foreach (var paragraphs in item.Paragraphs)
+                                                {
+                                                                @foreach (var lectures in paragraphs.Lectures)
+                                                    {
+                                                        TimeSpan timeSpan = TimeSpan.ParseExact(lectures.Duration.Replace("hr ", ":").Replace("min ", ":").Replace("sec", ""), @"h\:m\:s", null);
+                                                        totalduration = totalduration.Add(timeSpan);
+                                                    }
+                                                }
+                                                string duration = string.Format("{0:%h}hr {0:%m}min {0:%s}sec", totalduration);
+                                            }
+                                            <li><i class="fa fa-video text-success"></i><span>
+                                                 <span>@item.Paragraphs.Sum(x=>x.Lectures.Count) Lectures</span>
+                                            </span></li>
+                                            <li><i class="fa fa-clock text-danger"></i><span>@duration</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="crs_grid_foot">
+                                    <div class="crs_flex">
+                                        <div class="crs_fl_first">
+                                            <div class="crs_tutor">
+                                                <span class=" crs_auth small"> By: <a asp-controller="instructor" asp-action="instructorDetail" asp-route-id="@item.InstructorId">@(item.Instructor.Name + " " + item.Instructor.Surname)</a> </span>
+                                           </div>
+                                        </div>
+                                        <div class="crs_fl_last">
+                                            <div class="foot_list_info">
+                                                <ul>
+                                                    <li><div class="elsio_ic"><i class="fa fa-user text-danger"></i></div><div class="elsio_tx">@item.AppUserCourses.Count</div></li>
+                                                    <li><div class="elsio_ic"><i class="fa fa-eye text-success"></i></div><div class="elsio_tx">@item.ViewCount</div></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    }        
+
+                   
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<section >
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-8">
+                <div class="sec-heading center">
+                    <h2>Select Your <span class="theme-cl">Categories</span></h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+
+            @foreach (var category in Model.Categories.Take(16))
+            {
+                <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                <div class="cates_crs_wrip">
+                    <div class="crs_trios">
+                        <div class="crs_cate_icon"><i class="@category.IconUrl"></i></div>
+                        <div class="crs_cate_link"><a asp-controller="Category" asp-action="CourseCategory" asp-route-id = "@category.Id">View Cources</a></div>
+                    </div>
+                    <div class="crs_capt_cat">
+                        <h4>@category.Name</h4>
+                        <p>@category.Description.</p>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+
+    </div>
+</section>
+<div class="clearfix"></div>
+
+
+<section class="min gray">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-10 text-center">
+                <div class="sec-heading center mb-4">
+                    <h2>Our Top <span class="theme-cl">Instructors</span></h2>
+                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="tutor-slide">
+
+                    @foreach (var instructor in Model.Instructors.Take(10))
+                    {
+                        <div class="lios_item">
+                            <div class="crs_trt_grid theme-light shadow_none">
+                                <div class="crs_trt_thumb">
+                                   <a asp-controller="Instructor" asp-action="InstructorDetail" asp-route-id="@instructor.Id" class="crs_trt_thum_link"><img src="~/user/assets/instructorimg/@instructor.ImageUrl" style="width:370px; height:200px" alt=""></a>
+                               </div>
+                                <div class="crs_trt_caption large">
+                                    <div class="instructor_tag dark"><span>
+                                            @foreach (var profession in instructor.InstructorProfessions.Where(p => p.InstructorId == instructor.Id))
+                                            {
+                                                <span  style="padding:5px">@profession.Profession.Name</span>
+                                            }
+                                    </span></div>
+                                    <div class="instructor_title"><h4><a asp-controller="instructor" asp-action="instructorDetail" asp-route-id= "@instructor.Id">@(instructor.Name + " " + instructor.Surname)</a></h4></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<section>
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-8">
+                <div class="sec-heading center">
+                    <h2>Top & Featured <span class="theme-cl">Products</span></h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            @foreach (var product in Model.Products.Take(8))
+            {
+                <div  class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                    <div class="prd_grid_box">
+                        <div class="prd_grid_thumb">
+                            <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@product.Id"><img src="~/user/assets/productimg/@product.ImageUrl" class="img-fluid" style="width:100%; height:300px !important;" alt=""></a>
+                        </div>
+                        <div class="prd_grid_caption">
+                            <div class="prd_center_capt">
+                                <div class="prd_title"><h4><a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@product.Id">@product.Name</a></h4></div>
+                                <div class="prd_price_info">
+                                    @if (product.DiscountPrice>0 && product.Price>0)
+                                    {
+                                      <h5 class="org_prc"><span class="old_prc">$@product.Price</span>$@product.DiscountPrice</h5>
+                                    }
+                                    @if (product.DiscountPrice==0 && product.Price > 0)
+                                    {
+                                        <h5 class="org_prc">$@product.Price</h5>
+                                    }
+                                    @if (product.DiscountPrice == 0 && product.Price == 0)
+                                    {
+                                         <h5 class="org_prc">Free</h5>
+                                    }
+                                </div>
+                            </div>
+                            <div class="prd_bot_capt">
+                                <div class="prd_button">
+                                    <a asp-controller="Shop" asp-action="ProductDetail" asp-route-id="@product.Id" class="bth bth_prd">More Info...</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+
+<section class="min gray">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-8">
+                <div class="sec-heading center">
+                    <h2>Our Students <span class="theme-cl">Reviews</span></h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-xl-12 col-lg-12 col-sm-12">
+
+                <div class="reviews-slide space">
+                    @if (Model.CourseReviews.Count>0)
+                    {
+                        foreach (var reviews in Model.CourseReviews.OrderByDescending(cr=>cr.ReviewDate).Take(15))
+                        {
+                                 <!-- Single Item -->
+                        <div class="single_items lios_item">
+                            <div class="_testimonial_wrios shadow_none">
+                                <div class="_testimonial_flex">
+                                    <div class="_testimonial_flex_first">
+                                        <div class="_tsl_flex_thumb">
+                                            @if (reviews.AppUser.ImageUrl == null)
+                                                {
+                                                    <img src="~/user/assets/userimg/userimage.png" class="img-fluid" width="200" alt="">
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/user/assets/userimg/@reviews.AppUser.ImageUrl" class="img-fluid" width="200" alt="">
+                                                }
+                                        </div>
+                                        <div class="_tsl_flex_capst">
+                                            <h5>@(reviews.AppUser.Name + " " + reviews.AppUser.Surname)</h5>
+                                            <div class="_ovr_posts"><span>@reviews.AppUser.UserName</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="facts-detail">
+                                    <p>@reviews.ReviewContent</p>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

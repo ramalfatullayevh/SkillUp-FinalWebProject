@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+@model UpdateInstructorVM
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+        <div class="dashboard_wrap d-flex align-items-center justify-content-between">
+            <div class="arion">
+                <nav class="transparent">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-controller="dashboard" asp-action="index">Go To Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">My Profile</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-7 col-lg-6 col-md-12">
+        <div class="dashboard_wrap">
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 mb-4">
+                    <h6 class="m-0">Basic Detail</h6>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-xl-12 col-lg-12 col-md-12">
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="form-group smalls">
+                            <label asp-for="Name">First Name*</label>
+                            <input asp-for="Name" type="text" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label asp-for="Surname">Last Name</label>
+                            <input asp-for="Surname" type="text" class="form-control" />
+                            <span asp-validation-for="Surname" class="text-danger"></span>
+
+                        </div>
+                        <div class="form-group smalls">
+                            <label asp-for="Description"></label>
+                            <input asp-for="Description" type="text" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label asp-for="Email">Email</label>
+                            <input asp-for="Email" type="email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label asp-for="TwitterUrl">Twitter*</label>
+                            <input asp-for="TwitterUrl" type="text" class="form-control" />
+                            <span asp-validation-for="TwitterUrl" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label asp-for="LinkedInUrl">LinkedIn*</label>
+                            <input asp-for="LinkedInUrl" type="text" class="form-control" />
+                            <span asp-validation-for="LinkedInUrl" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label asp-for="FacebookUrl">Facebook*</label>
+                            <input asp-for="FacebookUrl" type="text" class="form-control" />
+                            <span asp-validation-for="FacebookUrl" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label asp-for="InstagramUrl">Instagram*</label>
+                            <input asp-for="InstagramUrl" type="text" class="form-control" />
+                            <span asp-validation-for="InstagramUrl" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <img width="200" src="~/user/assets/instructorimg/@Model.ImageUrl" /><br />
+                            <label asp-for="Image">Update Photo</label>
+                            <div class="custom-file">
+                                <input asp-for="Image" type="file" class="custom-file-input" id="customFile">
+                                <label asp-for="Image" class="custom-file-label" for="customFile">Choose file</label>
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group smalls">
+                            <video width="200" src="~/user/assets/instructorpreview/@Model.PreviewUrl" autoplay controls></video><br />
+                            <label asp-for="Image">Update Preview Video</label>
+                            <div class="custom-file">
+                                <input asp-for="Preview" type="file" class="custom-file-input" id="customFile">
+                                <label asp-for="Preview" class="custom-file-label" for="customFile">Choose file</label>
+                                <span asp-validation-for="Preview" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group smalls">
+                            <label asp-for="CurrentPassword">Current Password</label>
+                            <input asp-for="CurrentPassword" type="password" class="form-control" />
+                            <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label asp-for="Password">New Password</label>
+                            <input asp-for="Password" type="password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group smalls">
+                            <label asp-for="ConfirmPassword">Confirm Password</label>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group smalls">
+                            <button class="btn theme-bg text-white" type="submit">Save Change</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+</section>
